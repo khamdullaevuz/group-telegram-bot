@@ -28,9 +28,5 @@ async def send_welcome(message: types.Message):
 
     await message.reply("Salom men guruhlarda ishlovchi botman!", reply_markup=main_keyboard)
 
-@dp.callback_query_handler(lambda c: c.data == 'commands')
-async def show_commands(callback_query: types.CallbackQuery):
-	await bot.edit_message_text(callback_query.user.id, "Test")
-
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
