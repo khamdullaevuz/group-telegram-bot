@@ -28,5 +28,21 @@ async def send_welcome(message: types.Message):
 
     await message.reply("Salom men guruhlarda ishlovchi botman!", reply_markup=main_keyboard)
 
+backbutton = InlineKeyboardButton('Ortga', callback_data="back")
+back_keyboard = InlineKeyboardMarkup()
+back_keyboard.add(backbutton)
+
+@dp.callback_query_handler(text='commands')  # if cb.data == 'yes'
+async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
+    text = 'Bot buyruqlari:\n/start - qayta ishga tushirish'
+
+    await bot.edit_message_text(text, query.from_user.id, query.message.message_id, reply_markup=back_keyboard)
+
+@dp.callback_query_handler(text='back')  # if cb.data == 'yes'
+async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
+    text = 'Salom men guruhlarda ishlovchi botman!'
+
+    await bot.edit_message_text(text, query.from_user.id, query.message.message_id, reply_markup=main_keyboard)
+
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
